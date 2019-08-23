@@ -6,7 +6,8 @@
       <router-link to="/search">Search</router-link>
     </div>-->
     <Sidebar />
-    <div class="ml-56">
+    <div v-if="isLoading">...Loading...</div>
+    <div v-else class="ml-56">
       <router-view />
     </div>
   </div>
@@ -26,6 +27,14 @@ import Sidebar from "@/components/Sidebar.vue";
 export default class App extends Vue {
   private mounted() {
     console.log("App mounted");
+  }
+
+  private created() {
+    this.$store.commit("setDictionary");
+  }
+
+  get isLoading(): boolean {
+    return this.$store.state.loading;
   }
 }
 </script>
