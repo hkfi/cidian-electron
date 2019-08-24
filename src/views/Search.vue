@@ -28,14 +28,20 @@ interface IDictionaryItem {
 export default class Search extends Vue {
   private readyToSearch: boolean = false;
   private lastInputTime: number = Date.now();
-
   private lastSearchTime: any = Date.now();
-  private searchInput: string = "";
   private noResults: boolean = false;
 
   private pagination: number = 1;
 
-  get searchLength() {
+  get searchInput(): string {
+    return this.$store.state.searchInput;
+  }
+
+  set searchInput(input: string) {
+    this.$store.commit("setSearchInput", input);
+  }
+
+  get searchLength(): number {
     return this.searchInput.length;
   }
 
@@ -52,7 +58,7 @@ export default class Search extends Vue {
   }
 
   @Watch("searchResults")
-  onResultsChanged() {
+  private onResultsChanged() {
     this.pagination = 1;
   }
 
@@ -73,7 +79,6 @@ export default class Search extends Vue {
   }
 
   private setLastInputTime() {
-    // this.readyToSearch = false;
     this.lastInputTime = Date.now() + 500;
     setTimeout(() => {
       if (Date.now() >= this.lastInputTime) {

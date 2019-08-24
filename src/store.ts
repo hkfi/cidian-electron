@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     loading: false,
     dictionary: [],
-    searchResults: []
+    searchResults: [],
+    searchInput: ""
   },
   mutations: {
     // Set cc-cedict.json dictionary to dictionary in vuex
@@ -17,7 +18,20 @@ export default new Vuex.Store({
       state.dictionary = data;
     },
     setSearchResults: (state, payload) => {
+      // payload.sort((a: any, b: any) => {
+      //   // sort by priority
+      //   // 1. exact match after
+      //   // 2. exact match after lowercasing the word
+      //   // 3.
+      //   let priorityA = 0
+      //   let priorityB = 0
+      //   if (a.d.includes())
+      // })
+
       state.searchResults = payload;
+    },
+    setSearchInput: (state, payload) => {
+      state.searchInput = payload;
     },
     setLoading: (state, payload: boolean) => {
       state.loading = payload;
