@@ -21,7 +21,7 @@ export default new Vuex.Store({
       state.dictionary = data;
     },
     setSearchResults: (state, payload) => {
-      // Sets the search results using the user's search input
+      // Sets the search results using the user's search input after sorting
       const sortedResults = sortSearchResults(payload, state.searchInput);
       state.searchResults = sortedResults;
     },

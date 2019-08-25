@@ -66,7 +66,7 @@ export default class Search extends Vue {
         return this.arrayIncludesWord(word.d);
       });
       this.noResults = tempResult.length === 0 ? true : false;
-      this.$store.commit("setSearchResults", tempResult);
+      this.$store.commit("setSearchResults", tempResult.slice(0, 1000));
     }
   }
 
