@@ -14,7 +14,7 @@
 
       <div v-if="!noResults">
         <div class="overflow-y-scroll max-h-90vh">
-          <div v-for="result in results" :key="result.id" class="flex">{{result.s}} - {{result.d}}</div>
+          <SearchResultCard v-for="result in results" :key="result.id" :dictionaryItem="result" />
         </div>
         <button v-if="canPaginate" @click="increasePagination">See More</button>
       </div>
@@ -26,6 +26,7 @@
     <!-- Right -->
     <div class="w-3/4 min-h-screen max-h-screen bg-gray-700 text-white border-r border-black">
       <div>RIGHT SIDE</div>
+      <div v-if="currentDictionaryItem">{{currentDictionaryItem.s}}</div>
     </div>
   </div>
 </template>
@@ -33,8 +34,13 @@
 <script lang="ts">
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { IDictionaryItem } from "@/types";
+import SearchResultCard from "@/components/SearchResultCard.vue";
 
-@Component
+@Component({
+  components: {
+    SearchResultCard
+  }
+})
 export default class Search extends Vue {
   private readyToSearch: boolean = false;
   private lastInputTime: number = Date.now();
@@ -65,6 +71,10 @@ export default class Search extends Vue {
 
   get canPaginate(): boolean {
     return this.results.length !== this.$store.state.searchResults.length;
+  }
+
+  get currentDictionaryItem(): IDictionaryItem {
+    return this.$store.state.currentDictionaryItem;
   }
 
   @Watch("searchResults")

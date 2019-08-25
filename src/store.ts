@@ -12,7 +12,8 @@ export default new Vuex.Store({
     loading: false,
     dictionary: [] as IDictionaryItem[],
     searchResults: [] as IDictionaryItem[],
-    searchInput: ""
+    searchInput: "",
+    currentDictionaryItem: null as IDictionaryItem | null
   },
   mutations: {
     // Set cc-cedict.json dictionary to dictionary in vuex
@@ -27,6 +28,9 @@ export default new Vuex.Store({
     },
     setSearchInput: (state, payload) => {
       state.searchInput = payload;
+    },
+    setCurrentDictionaryItem: (state, payload: IDictionaryItem) => {
+      state.currentDictionaryItem = payload;
     },
     setLoading: (state, payload: boolean) => {
       state.loading = payload;
