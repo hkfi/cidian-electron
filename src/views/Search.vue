@@ -14,15 +14,7 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from "vue-property-decorator";
-
-interface IDictionaryItem {
-  id: number; // id
-  s: string; // simplified
-  t: string; // traditional
-  pn: string; // pinyin numeric
-  pd: string; // pinyin diacritic
-  d: string[]; // definition(s)
-}
+import { IDictionaryItem } from "@/types";
 
 @Component
 export default class Search extends Vue {

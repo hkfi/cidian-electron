@@ -2,13 +2,16 @@ import Vue from "vue";
 import Vuex from "vuex";
 const data = require("@/assets/cc-cedict.json");
 
+import { IDictionaryItem } from "@/types";
+import { sortSearchResults } from "@/utils";
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     loading: false,
-    dictionary: [],
-    searchResults: [],
+    dictionary: [] as IDictionaryItem[],
+    searchResults: [] as IDictionaryItem[],
     searchInput: ""
   },
   mutations: {
@@ -18,17 +21,9 @@ export default new Vuex.Store({
       state.dictionary = data;
     },
     setSearchResults: (state, payload) => {
-      // payload.sort((a: any, b: any) => {
-      //   // sort by priority
-      //   // 1. exact match after
-      //   // 2. exact match after lowercasing the word
-      //   // 3.
-      //   let priorityA = 0
-      //   let priorityB = 0
-      //   if (a.d.includes())
-      // })
-
-      state.searchResults = payload;
+      // Sets the search results using the user's search input
+      const sortedResults = sortSearchResults(payload, state.searchInput);
+      state.searchResults = sortedResults;
     },
     setSearchInput: (state, payload) => {
       state.searchInput = payload;
