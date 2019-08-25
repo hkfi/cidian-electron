@@ -1,14 +1,32 @@
 <template>
-  <div class="about">
-    <h1>This is the search page</h1>
-    <input type="text" placeholder="Search" v-model="searchInput" @input="setLastInputTime" />
-    <div v-if="!noResults">
-      <li>
-        <ol v-for="result in results" :key="result.id">{{result.s}} - {{result.d}}</ol>
-      </li>
-      <button v-if="canPaginate" @click="increasePagination">See More</button>
+  <div class="flex">
+    <!-- Left -->
+    <div class="w-1/4 h-screen relative">
+      <div class="sticky top-0 bg-gray-400 w-full p-1">
+        <input
+          class="w-full"
+          type="text"
+          placeholder="Search"
+          v-model="searchInput"
+          @input="setLastInputTime"
+        />
+      </div>
+
+      <div v-if="!noResults">
+        <div class="overflow-y-scroll max-h-90vh">
+          <div v-for="result in results" :key="result.id" class="flex">{{result.s}} - {{result.d}}</div>
+        </div>
+        <button v-if="canPaginate" @click="increasePagination">See More</button>
+      </div>
+      <div v-else>
+        <p>No results</p>
+      </div>
     </div>
-    <p v-else>No results</p>
+
+    <!-- Right -->
+    <div class="w-3/4 min-h-screen max-h-screen bg-gray-700 text-white border-r border-black">
+      <div>RIGHT SIDE</div>
+    </div>
   </div>
 </template>
 
