@@ -25,8 +25,25 @@
 
     <!-- Right -->
     <div class="w-3/4 min-h-screen max-h-screen bg-gray-700 text-white border-r border-black">
-      <div>RIGHT SIDE</div>
-      <div v-if="currentDictionaryItem">{{currentDictionaryItem.s}}</div>
+      <div v-if="currentDictionaryItem" class="p-2">
+        <div class="block">
+          <div class="flex">
+            <div class="w-1/2">
+              <span class="block text-6xl">{{currentDictionaryItem.s}}</span>
+              <span class="block text-4xl">{{currentDictionaryItem.pd}}</span>
+            </div>
+            <div class="w-1/2">
+              <div>Menu Goes here</div>
+            </div>
+          </div>
+        </div>
+        <div class="block text-2xl">
+          Definitions:
+          <ul>
+            <li v-for="def in currentDictionaryItem.d" :key="def">- {{def}}</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </template>
