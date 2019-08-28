@@ -14,7 +14,8 @@ export default new Vuex.Store({
     dictionary: [] as IDictionaryItem[],
     searchResults: [] as IDictionaryItem[],
     searchInput: "",
-    currentDictionaryItem: null as IDictionaryItem | null
+    currentDictionaryItem: null as IDictionaryItem | null,
+    currentBookmarkedDictionaryItem: null as IDictionaryItem | null
   },
   mutations: {
     // Set cc-cedict.json dictionary to dictionary in vuex
@@ -36,9 +37,19 @@ export default new Vuex.Store({
     setCurrentDictionaryItem: (state, payload: IDictionaryItem) => {
       state.currentDictionaryItem = payload;
     },
+    setCurrentBookmarkedDictionaryItem: (state, payload: IDictionaryItem) => {
+      state.currentBookmarkedDictionaryItem = payload;
+    },
     setLoading: (state, payload: boolean) => {
       state.loading = payload;
     }
   },
-  actions: {}
+  actions: {},
+  getters: {
+    bookmarkedDictionaryItems: state => {
+      return state.dictionary.filter((dictionaryItem: IDictionaryItem) => {
+        return state.bookmarks.includes(dictionaryItem.id);
+      });
+    }
+  }
 });
