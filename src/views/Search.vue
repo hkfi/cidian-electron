@@ -34,6 +34,8 @@
             </div>
             <div class="w-1/2">
               <div>Menu Goes here</div>
+              <button v-if="!bookmarked" @click="bookmarkItem">Bookmark</button>
+              <button v-else @click="unbookmarkItem">Remove Bookmark</button>
             </div>
           </div>
         </div>
@@ -52,6 +54,9 @@
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { IDictionaryItem } from "@/types";
 import SearchResultCard from "@/components/SearchResultCard.vue";
+import { remote } from "electron";
+import Store from "electron-store";
+const store = new Store();
 
 @Component({
   components: {
@@ -65,6 +70,33 @@ export default class Search extends Vue {
   private noResults: boolean = false;
 
   private pagination: number = 1;
+
+  private bookmarkItem() {
+    if (!this.bookmarked) {
+      const updatedBookmarks = [
+        ...this.$store.state.bookmarks,
+        this.currentDictionaryItem.id
+      ];
+      this.$store.commit("setBookmarks", updatedBookmarks);
+      store.set("bookmarks", updatedBookmarks);
+    }
+  }
+
+  private unbookmarkItem() {
+    if (this.bookmarked) {
+      const filteredBookmarks = this.$store.state.bookmarks.filter(
+        (id: number) => {
+          id !== this.currentDictionaryItem.id;
+        }
+      );
+      this.$store.commit("setBookmarks", filteredBookmarks);
+      store.set("bookmarks", filteredBookmarks);
+    }
+  }
+
+  get bookmarked(): boolean {
+    return this.$store.state.bookmarks.includes(this.currentDictionaryItem.id);
+  }
 
   get searchInput(): string {
     return this.$store.state.searchInput;

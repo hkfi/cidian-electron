@@ -18,6 +18,8 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import Sidebar from "@/components/Sidebar.vue";
+import Store from "electron-store";
+const store = new Store();
 
 @Component({
   components: {
@@ -31,6 +33,12 @@ export default class App extends Vue {
 
   private created() {
     this.$store.commit("setDictionary");
+    const bookmarks = store.get("bookmarks");
+    if (bookmarks) {
+      this.$store.commit("setBookmarks", bookmarks);
+    } else {
+      store.set("bookmarks", []);
+    }
   }
 
   get isLoading(): boolean {

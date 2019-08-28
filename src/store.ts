@@ -10,6 +10,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     loading: false,
+    bookmarks: [] as number[],
     dictionary: [] as IDictionaryItem[],
     searchResults: [] as IDictionaryItem[],
     searchInput: "",
@@ -20,6 +21,9 @@ export default new Vuex.Store({
     // Runs once at the start of the application when App.vue is created
     setDictionary: state => {
       state.dictionary = data;
+    },
+    setBookmarks: (state, payload) => {
+      state.bookmarks = payload;
     },
     setSearchResults: (state, payload) => {
       // Sets the search results using the user's search input after sorting
