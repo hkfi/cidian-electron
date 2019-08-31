@@ -8,18 +8,12 @@
 
       <div>
         <div class="overflow-y-scroll max-h-90vh">
-          <div
+          <SearchResultCard
             v-for="dictionaryItem in bookmarkedDictionaryItems"
             :key="dictionaryItem.id"
-            class="h-24 bg-gray-200 border-b border-gray overflow-hidden cursor-pointer hover:bg-gray-300"
-            @click="setCurrentBookmarkedDictionaryItem(dictionaryItem)"
-          >
-            <span class="block text-xl">{{dictionaryItem.s}}</span>
-            <span class="block text-base">{{dictionaryItem.pd}}</span>
-            <span class="block text-sm">
-              <span v-for="def in dictionaryItem.d" :key="def">{{`${def} - `}}</span>
-            </span>
-          </div>
+            :dictionaryItem="dictionaryItem"
+            @selected="setCurrentBookmarkedDictionaryItem"
+          />
         </div>
         <!-- <button v-if="canPaginate" @click="increasePagination">See More</button> -->
       </div>
@@ -56,8 +50,13 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { IDictionaryItem } from "../types";
+import SearchResultCard from "@/components/SearchResultCard.vue";
 
-@Component
+@Component({
+  components: {
+    SearchResultCard
+  }
+})
 export default class Bookmarks extends Vue {
   private searchInput: string = "";
   private mounted() {
@@ -73,9 +72,7 @@ export default class Bookmarks extends Vue {
   }
 
   private setCurrentBookmarkedDictionaryItem(dictionaryItem: IDictionaryItem) {
-    console.log("dicitem", dictionaryItem);
     this.$store.commit("setCurrentBookmarkedDictionaryItem", dictionaryItem);
-    console.log(this.currentBookmarkedDictionaryItem);
   }
 }
 </script>

@@ -99,8 +99,8 @@ export default class Search extends Vue {
     }
   }
 
-  private setCurrentDictionaryItem(dicItem: IDictionaryItem) {
-    this.$store.commit("setCurrentDictionaryItem", dicItem);
+  private setCurrentDictionaryItem(dictionaryItem: IDictionaryItem) {
+    this.$store.commit("setCurrentDictionaryItem", dictionaryItem);
   }
 
   get bookmarked(): boolean {
