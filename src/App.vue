@@ -1,10 +1,5 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link>|
-      <router-link to="/about">About</router-link>
-      <router-link to="/search">Search</router-link>
-    </div>-->
     <Sidebar />
     <div v-if="isLoading">...Loading...</div>
     <div v-else class="ml-56">
@@ -16,8 +11,10 @@
 <style src="./assets/tailwind.css"></style>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Provide } from "vue-property-decorator";
 import Sidebar from "@/components/Sidebar.vue";
+
+// Electron store to store user data
 import Store from "electron-store";
 const store = new Store();
 
@@ -27,6 +24,8 @@ const store = new Store();
   }
 })
 export default class App extends Vue {
+  @Provide() store = store;
+
   private mounted() {
     console.log("App mounted");
   }

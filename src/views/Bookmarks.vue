@@ -31,8 +31,8 @@
             </div>
             <div class="w-1/2">
               <div>Menu Goes here</div>
-              <!-- <button v-if="!bookmarked" @click="bookmarkItem">Bookmark</button>
-              <button v-else @click="unbookmarkItem">Remove Bookmark</button>-->
+              <button v-if="!bookmarked" @click="bookmarkItem">Bookmark</button>
+              <button v-else @click="unbookmarkItem">Remove Bookmark</button>
             </div>
           </div>
         </div>
@@ -48,9 +48,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Inject } from "vue-property-decorator";
 import { IDictionaryItem } from "../types";
 import SearchResultCard from "@/components/SearchResultCard.vue";
+import Store from "electron-store";
 
 @Component({
   components: {
@@ -58,9 +59,17 @@ import SearchResultCard from "@/components/SearchResultCard.vue";
   }
 })
 export default class Bookmarks extends Vue {
+  @Inject() store!: Store<number[]>;
+
   private searchInput: string = "";
   private mounted() {
     console.log(this.bookmarkedDictionaryItems);
+  }
+
+  get bookmarked(): boolean {
+    return this.$store.state.bookmarks.includes(
+      this.currentBookmarkedDictionaryItem.id
+    );
   }
 
   get bookmarkedDictionaryItems() {
@@ -73,6 +82,27 @@ export default class Bookmarks extends Vue {
 
   private setCurrentBookmarkedDictionaryItem(dictionaryItem: IDictionaryItem) {
     this.$store.commit("setCurrentBookmarkedDictionaryItem", dictionaryItem);
+  }
+
+  private bookmarkItem() {
+    if (!this.bookmarked) {
+      const updatedBookmarks = [
+        ...this.$store.state.bookmarks,
+        this.currentBookmarkedDictionaryItem.id
+      ];
+      this.$store.commit("setBookmarks", updatedBookmarks);
+      this.store.set("bookmarks", updatedBookmarks);
+    }
+  }
+
+  private unbookmarkItem() {
+    const filteredBookmarks = this.$store.state.bookmarks.filter(
+      (id: number) => {
+        id !== this.currentBookmarkedDictionaryItem.id;
+      }
+    );
+    this.$store.commit("setBookmarks", filteredBookmarks);
+    this.store.set("bookmarks", filteredBookmarks);
   }
 }
 </script>

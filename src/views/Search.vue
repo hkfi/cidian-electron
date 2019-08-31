@@ -56,12 +56,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from "vue-property-decorator";
+import { Component, Vue, Watch, Inject } from "vue-property-decorator";
 import { IDictionaryItem } from "@/types";
 import SearchResultCard from "@/components/SearchResultCard.vue";
 import { remote } from "electron";
 import Store from "electron-store";
-const store = new Store();
 
 @Component({
   components: {
@@ -69,6 +68,8 @@ const store = new Store();
   }
 })
 export default class Search extends Vue {
+  @Inject() store!: Store<number[]>;
+
   private readyToSearch: boolean = false;
   private lastInputTime: number = Date.now();
   private lastSearchTime: any = Date.now();
@@ -83,7 +84,7 @@ export default class Search extends Vue {
         this.currentDictionaryItem.id
       ];
       this.$store.commit("setBookmarks", updatedBookmarks);
-      store.set("bookmarks", updatedBookmarks);
+      this.store.set("bookmarks", updatedBookmarks);
     }
   }
 
@@ -95,7 +96,7 @@ export default class Search extends Vue {
         }
       );
       this.$store.commit("setBookmarks", filteredBookmarks);
-      store.set("bookmarks", filteredBookmarks);
+      this.store.set("bookmarks", filteredBookmarks);
     }
   }
 
