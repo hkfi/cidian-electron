@@ -14,7 +14,12 @@
 
       <div v-if="!noResults">
         <div class="overflow-y-scroll max-h-90vh">
-          <SearchResultCard v-for="result in results" :key="result.id" :dictionaryItem="result" />
+          <SearchResultCard
+            v-for="result in results"
+            :key="result.id"
+            :dictionaryItem="result"
+            @selected="setCurrentDictionaryItem"
+          />
         </div>
         <button v-if="canPaginate" @click="increasePagination">See More</button>
       </div>
@@ -92,6 +97,10 @@ export default class Search extends Vue {
       this.$store.commit("setBookmarks", filteredBookmarks);
       store.set("bookmarks", filteredBookmarks);
     }
+  }
+
+  private setCurrentDictionaryItem(dicItem: IDictionaryItem) {
+    this.$store.commit("setCurrentDictionaryItem", dicItem);
   }
 
   get bookmarked(): boolean {
