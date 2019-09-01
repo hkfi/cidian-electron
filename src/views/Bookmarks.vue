@@ -98,7 +98,7 @@ export default class Bookmarks extends Vue {
   private unbookmarkItem() {
     const filteredBookmarks = this.$store.state.bookmarks.filter(
       (id: number) => {
-        id !== this.currentBookmarkedDictionaryItem.id;
+        return id !== this.currentBookmarkedDictionaryItem.id;
       }
     );
     this.$store.commit("setBookmarks", filteredBookmarks);

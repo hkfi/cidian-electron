@@ -90,11 +90,13 @@ export default class Search extends Vue {
 
   private unbookmarkItem() {
     if (this.bookmarked) {
+      console.log(this.$store.state.bookmarks.length);
       const filteredBookmarks = this.$store.state.bookmarks.filter(
         (id: number) => {
-          id !== this.currentDictionaryItem.id;
+          return id !== this.currentDictionaryItem.id;
         }
       );
+      console.log("filteredbookmarks", filteredBookmarks);
       this.$store.commit("setBookmarks", filteredBookmarks);
       this.store.set("bookmarks", filteredBookmarks);
     }
