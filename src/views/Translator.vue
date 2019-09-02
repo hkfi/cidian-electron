@@ -17,11 +17,12 @@
           @click="translate"
         >Translate</button>
       </div>
-      <div class="block">
+      <div class="block pl-2">
         <span
-          class="text-white"
           v-for="(result, i) in translatorResults"
           :key="i"
+          class="text-white text-xl"
+          :class="{'hover:bg-gray-900 cursor-pointer': result.s, 'bg-gray-900': result === currentTranslatorDictionaryItem}"
           @click="setCurrentTranslatorDictionaryItem(result)"
         >
           <template v-if="result.s">{{result.s}}</template>
