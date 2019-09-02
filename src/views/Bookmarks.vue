@@ -21,28 +21,12 @@
 
     <!-- Right -->
     <div class="w-2/3 min-h-screen max-h-screen bg-gray-700 text-white border-r border-black">
-      hello
-      <div v-if="currentBookmarkedDictionaryItem" class="p-2">
-        <div class="block">
-          <div class="flex">
-            <div class="w-1/2">
-              <span class="block text-6xl">{{currentBookmarkedDictionaryItem.s}}</span>
-              <span class="block text-4xl">{{currentBookmarkedDictionaryItem.pd}}</span>
-            </div>
-            <div class="w-1/2">
-              <div>Menu Goes here</div>
-              <button v-if="!bookmarked" @click="bookmarkItem">Bookmark</button>
-              <button v-else @click="unbookmarkItem">Remove Bookmark</button>
-            </div>
-          </div>
-        </div>
-        <div class="block text-2xl">
-          Definitions:
-          <ul>
-            <li v-for="def in currentBookmarkedDictionaryItem.d" :key="def">- {{def}}</li>
-          </ul>
-        </div>
-      </div>
+      <DictionaryItemDisplay
+        v-if="currentBookmarkedDictionaryItem"
+        :dictionaryItem="currentBookmarkedDictionaryItem"
+        @bookmark-item="bookmarkItem"
+        @unbookmark-item="unbookmarkItem"
+      />
     </div>
   </div>
 </template>
@@ -51,11 +35,13 @@
 import { Component, Vue, Inject } from "vue-property-decorator";
 import { IDictionaryItem } from "../types";
 import SearchResultCard from "@/components/SearchResultCard.vue";
+import DictionaryItemDisplay from "@/components/DictionaryItemDisplay.vue";
 import Store from "electron-store";
 
 @Component({
   components: {
-    SearchResultCard
+    SearchResultCard,
+    DictionaryItemDisplay
   }
 })
 export default class Bookmarks extends Vue {

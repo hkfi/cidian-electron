@@ -30,27 +30,12 @@
 
     <!-- Right -->
     <div class="w-2/3 min-h-screen max-h-screen bg-gray-700 text-white border-r border-black">
-      <div v-if="currentDictionaryItem" class="p-2">
-        <div class="block">
-          <div class="flex">
-            <div class="w-1/2">
-              <span class="block text-6xl">{{currentDictionaryItem.s}}</span>
-              <span class="block text-4xl">{{currentDictionaryItem.pd}}</span>
-            </div>
-            <div class="w-1/2">
-              <div>Menu Goes here</div>
-              <button v-if="!bookmarked" @click="bookmarkItem">Bookmark</button>
-              <button v-else @click="unbookmarkItem">Remove Bookmark</button>
-            </div>
-          </div>
-        </div>
-        <div class="block text-2xl">
-          Definitions:
-          <ul>
-            <li v-for="def in currentDictionaryItem.d" :key="def">- {{def}}</li>
-          </ul>
-        </div>
-      </div>
+      <DictionaryItemDisplay
+        v-if="currentDictionaryItem"
+        :dictionaryItem="currentDictionaryItem"
+        @bookmark-item="bookmarkItem"
+        @unbookmark-item="unbookmarkItem"
+      />
     </div>
   </div>
 </template>
@@ -59,12 +44,14 @@
 import { Component, Vue, Watch, Inject } from "vue-property-decorator";
 import { IDictionaryItem } from "@/types";
 import SearchResultCard from "@/components/SearchResultCard.vue";
+import DictionaryItemDisplay from "@/components/DictionaryItemDisplay.vue";
 import { remote } from "electron";
 import Store from "electron-store";
 
 @Component({
   components: {
-    SearchResultCard
+    SearchResultCard,
+    DictionaryItemDisplay
   }
 })
 export default class Search extends Vue {

@@ -27,27 +27,12 @@
     </div>
     <!-- Right -->
     <div class="w-2/3 min-h-screen max-h-screen bg-gray-700 text-white border-r border-black">
-      <div v-if="currentTranslatorDictionaryItem" class="p-2">
-        <div class="block">
-          <div class="flex">
-            <div class="w-1/2">
-              <span class="block text-6xl">{{currentTranslatorDictionaryItem.s}}</span>
-              <span class="block text-4xl">{{currentTranslatorDictionaryItem.pd}}</span>
-            </div>
-            <div class="w-1/2">
-              <div>Menu Goes here</div>
-              <button v-if="!bookmarked" @click="bookmarkItem">Bookmark</button>
-              <button v-else @click="unbookmarkItem">Remove Bookmark</button>
-            </div>
-          </div>
-        </div>
-        <div class="block text-2xl">
-          Definitions:
-          <ul>
-            <li v-for="def in currentTranslatorDictionaryItem.d" :key="def">- {{def}}</li>
-          </ul>
-        </div>
-      </div>right
+      <DictionaryItemDisplay
+        v-if="currentTranslatorDictionaryItem"
+        :dictionaryItem="currentTranslatorDictionaryItem"
+        @bookmark-item="bookmarkItem"
+        @unbookmark-item="unbookmarkItem"
+      />
     </div>
   </div>
 </template>
@@ -56,13 +41,16 @@
 import { Component, Vue, Inject } from "vue-property-decorator";
 import { IDictionaryItem } from "../types";
 import CONSTANTS from "@/constants";
+import DictionaryItemDisplay from "@/components/DictionaryItemDisplay.vue";
 import Store from "electron-store";
 
-@Component
+@Component({
+  components: {
+    DictionaryItemDisplay
+  }
+})
 export default class Translator extends Vue {
   @Inject() store!: Store<number[]>;
-
-  // private translationResultArray:  = [];
 
   get translatorResults(): (IDictionaryItem | string)[] {
     return this.$store.state.translatorResults;
@@ -163,7 +151,6 @@ export default class Translator extends Vue {
 
     console.log("dicItemArray", dicItemArray);
     this.$store.commit("setTranslatorResults", dicItemArray);
-    // this.translationResultArray = dicItemArray;
     let endTime = Date.now();
     console.log(endTime - startTime);
   }
