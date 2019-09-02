@@ -1,7 +1,7 @@
 <template>
   <div class="flex">
     <!-- Left -->
-    <div class="w-1/4 h-screen relative">
+    <div class="w-1/3 h-screen relative">
       <div class="sticky top-0 bg-gray-400 w-full p-1">
         <input class="w-full" type="text" placeholder="Search" />
       </div>
@@ -20,7 +20,7 @@
     </div>
 
     <!-- Right -->
-    <div class="w-3/4 min-h-screen max-h-screen bg-gray-700 text-white border-r border-black">
+    <div class="w-2/3 min-h-screen max-h-screen bg-gray-700 text-white border-r border-black">
       hello
       <div v-if="currentBookmarkedDictionaryItem" class="p-2">
         <div class="block">

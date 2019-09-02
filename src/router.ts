@@ -29,6 +29,11 @@ export default new Router({
       path: "/bookmarks",
       name: "bookmarks",
       component: () => import("./views/Bookmarks.vue")
+    },
+    {
+      path: "/translator",
+      name: "translator",
+      component: () => import("./views/Translator.vue")
     }
   ]
 });

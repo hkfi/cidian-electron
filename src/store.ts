@@ -14,8 +14,12 @@ export default new Vuex.Store({
     dictionary: [] as IDictionaryItem[],
     searchResults: [] as IDictionaryItem[],
     searchInput: "",
+    translatorInput: "",
+    translatorDictionaryItems: [] as IDictionaryItem[],
+    translatorResults: [] as (IDictionaryItem | string)[],
     currentDictionaryItem: null as IDictionaryItem | null,
-    currentBookmarkedDictionaryItem: null as IDictionaryItem | null
+    currentBookmarkedDictionaryItem: null as IDictionaryItem | null,
+    currentTranslatorDictionaryItem: null as IDictionaryItem | null
   },
   mutations: {
     // Set cc-cedict.json dictionary to dictionary in vuex
@@ -31,14 +35,23 @@ export default new Vuex.Store({
       const sortedResults = sortSearchResults(payload, state.searchInput);
       state.searchResults = sortedResults;
     },
+    setTranslatorResults: (state, payload) => {
+      state.translatorResults = payload;
+    },
     setSearchInput: (state, payload) => {
       state.searchInput = payload;
+    },
+    setTranslatorInput: (state, payload) => {
+      state.translatorInput = payload;
     },
     setCurrentDictionaryItem: (state, payload: IDictionaryItem) => {
       state.currentDictionaryItem = payload;
     },
     setCurrentBookmarkedDictionaryItem: (state, payload: IDictionaryItem) => {
       state.currentBookmarkedDictionaryItem = payload;
+    },
+    setCurrentTranslatorDictionaryItem: (state, payload: IDictionaryItem) => {
+      state.currentTranslatorDictionaryItem = payload;
     },
     setLoading: (state, payload: boolean) => {
       state.loading = payload;

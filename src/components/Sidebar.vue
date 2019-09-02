@@ -32,6 +32,10 @@ export default class Sidebar extends Vue {
     {
       route: "/bookmarks",
       text: "Bookmarks"
+    },
+    {
+      route: "/translator",
+      text: "Translator"
     }
   ];
 }
