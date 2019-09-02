@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-24 bg-gray-200 border-b border-gray overflow-hidden cursor-pointer hover:bg-gray-300"
+    class="h-24 bg-gray-700 text-white pl-1 border-b border-gray overflow-hidden cursor-pointer hover:bg-gray-600"
     @click="selected"
   >
     <span class="block text-xl">{{dictionaryItem.s}}</span>

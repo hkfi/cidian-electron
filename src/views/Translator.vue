@@ -1,21 +1,25 @@
 <template>
   <div class="flex">
     <!-- Left -->
-    <div class="w-1/3 h-screen relative">
+    <div class="w-1/3 h-screen relative bg-gray-600 border-r border-black">
       <div class="p-2 block">
         <textarea
           type="text"
           rows="5"
-          placeholder="Study from Chinese text by pasting them here"
+          placeholder="Paste Chinese text here"
           v-model="translatorInput"
-          class="w-full"
+          class="w-full bg-gray-600 focus:bg-gray-700 text-white p-1 resize-none border rounded focus:outline-none"
         />
       </div>
-      <div class="block">
-        <button class="mr-0" @click="translate">Translate</button>
+      <div class="block pl-2">
+        <button
+          class="bg-transparent hover:bg-gray-500 text-white font-semibold hover:text-white py-1 px-4 border rounded hover:border-transparent focus:outline-none"
+          @click="translate"
+        >Translate</button>
       </div>
       <div class="block">
         <span
+          class="text-white"
           v-for="(result, i) in translatorResults"
           :key="i"
           @click="setCurrentTranslatorDictionaryItem(result)"
@@ -26,7 +30,7 @@
       </div>
     </div>
     <!-- Right -->
-    <div class="w-2/3 min-h-screen max-h-screen bg-gray-700 text-white border-r border-black">
+    <div class="w-2/3 min-h-screen max-h-screen bg-gray-800 text-white border-r border-black">
       <DictionaryItemDisplay
         v-if="currentTranslatorDictionaryItem"
         :dictionaryItem="currentTranslatorDictionaryItem"

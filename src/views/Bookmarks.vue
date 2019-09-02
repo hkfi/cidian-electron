@@ -1,8 +1,8 @@
 <template>
   <div class="flex">
     <!-- Left -->
-    <div class="w-1/3 h-screen relative">
-      <div class="sticky top-0 bg-gray-400 w-full p-1">
+    <div class="w-1/3 h-screen relative bg-gray-600 border-r border-black">
+      <div class="sticky top-0 bg-gray-600 w-full p-1">
         <input class="w-full" type="text" placeholder="Search" />
       </div>
 
@@ -20,7 +20,7 @@
     </div>
 
     <!-- Right -->
-    <div class="w-2/3 min-h-screen max-h-screen bg-gray-700 text-white border-r border-black">
+    <div class="w-2/3 min-h-screen max-h-screen bg-gray-800 text-white border-r border-black">
       <DictionaryItemDisplay
         v-if="currentBookmarkedDictionaryItem"
         :dictionaryItem="currentBookmarkedDictionaryItem"
