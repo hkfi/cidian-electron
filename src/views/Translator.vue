@@ -55,6 +55,7 @@
 <script lang="ts">
 import { Component, Vue, Inject } from "vue-property-decorator";
 import { IDictionaryItem } from "../types";
+import CONSTANTS from "@/constants";
 import Store from "electron-store";
 
 @Component
@@ -140,8 +141,8 @@ export default class Translator extends Vue {
       // Longest word length in the dictionary is 19 but only one item matches that
       // 4 is succifient for the vast majority of words, proverbs, idioms
       // With 4 however, may miss out on names of people or places, especially of foreign origin
-      if (textRemaining.length > 4) {
-        lengthRemaining = 4;
+      if (textRemaining.length > CONSTANTS.TRANSLATION_MAX_SUBSTRING) {
+        lengthRemaining = CONSTANTS.TRANSLATION_MAX_SUBSTRING;
       }
 
       for (let endI: number = lengthRemaining; endI > 0; endI--) {
