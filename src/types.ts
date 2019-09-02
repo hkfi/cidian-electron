@@ -6,3 +6,8 @@ export interface IDictionaryItem {
   pd: string; // pinyin diacritic
   d: string[]; // definition(s)
 }
+
+export interface ISidebarMenuItem {
+  route: string; // eg. "/search"
+  text: string; // eg. "Search"
+}
