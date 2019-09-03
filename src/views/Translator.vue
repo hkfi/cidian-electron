@@ -87,17 +87,27 @@ export default class Translator extends Vue {
       ];
       this.$store.commit("setBookmarks", updatedBookmarks);
       this.store.set("bookmarks", updatedBookmarks);
+      this.$store.commit(
+        "appendBookmarkedDictionaryItem",
+        this.currentTranslatorDictionaryItem
+      );
     }
   }
 
   private unbookmarkItem() {
-    const filteredBookmarks = this.$store.state.bookmarks.filter(
-      (id: number) => {
-        return id !== this.currentTranslatorDictionaryItem.id;
-      }
-    );
-    this.$store.commit("setBookmarks", filteredBookmarks);
-    this.store.set("bookmarks", filteredBookmarks);
+    if (this.bookmarked) {
+      const filteredBookmarks = this.$store.state.bookmarks.filter(
+        (id: number) => {
+          return id !== this.currentTranslatorDictionaryItem.id;
+        }
+      );
+      this.$store.commit("setBookmarks", filteredBookmarks);
+      this.store.set("bookmarks", filteredBookmarks);
+      this.$store.commit(
+        "removeBookmarkedDictionaryItem",
+        this.currentTranslatorDictionaryItem.id
+      );
+    }
   }
 
   private translate() {

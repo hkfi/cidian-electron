@@ -2,7 +2,7 @@ import { IDictionaryItem } from "@/types";
 
 export function sortSearchResults(results: IDictionaryItem[], input: string) {
   const resultsCopy = results.slice();
-  const regexCaseInsensitive: RegExp = new RegExp(results.join("|"), "i");
+  const regexCaseInsensitive: RegExp = new RegExp(`^${results.join("|")}`, "i");
 
   return resultsCopy.sort((a, b) => {
     let aRes = sortResultsLogic(a, input, regexCaseInsensitive);
@@ -17,6 +17,7 @@ export function sortSearchResults(results: IDictionaryItem[], input: string) {
   });
 }
 
+// Function to check which word has priority when sorting search results
 function sortResultsLogic(
   wordObj: IDictionaryItem,
   input: string,

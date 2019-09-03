@@ -31,13 +31,7 @@ export default class App extends Vue {
   }
 
   private created() {
-    this.$store.commit("setDictionary");
-    const bookmarks = store.get("bookmarks");
-    if (bookmarks) {
-      this.$store.commit("setBookmarks", bookmarks);
-    } else {
-      store.set("bookmarks", []);
-    }
+    this.$store.commit("init");
   }
 
   get isLoading(): boolean {

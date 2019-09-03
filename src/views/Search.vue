@@ -72,6 +72,10 @@ export default class Search extends Vue {
       ];
       this.$store.commit("setBookmarks", updatedBookmarks);
       this.store.set("bookmarks", updatedBookmarks);
+      this.$store.commit(
+        "appendBookmarkedDictionaryItem",
+        this.currentDictionaryItem
+      );
     }
   }
 
@@ -86,6 +90,10 @@ export default class Search extends Vue {
       console.log("filteredbookmarks", filteredBookmarks);
       this.$store.commit("setBookmarks", filteredBookmarks);
       this.store.set("bookmarks", filteredBookmarks);
+      this.$store.commit(
+        "removeBookmarkedDictionaryItem",
+        this.currentDictionaryItem.id
+      );
     }
   }
 

@@ -59,7 +59,7 @@ export default class Bookmarks extends Vue {
   }
 
   get bookmarkedDictionaryItems() {
-    return this.$store.getters.bookmarkedDictionaryItems;
+    return this.$store.state.bookmarkedDictionaryItems;
   }
 
   get currentBookmarkedDictionaryItem() {
@@ -78,17 +78,27 @@ export default class Bookmarks extends Vue {
       ];
       this.$store.commit("setBookmarks", updatedBookmarks);
       this.store.set("bookmarks", updatedBookmarks);
+      this.$store.commit(
+        "appendBookmarkedDictionaryItem",
+        this.currentBookmarkedDictionaryItem
+      );
     }
   }
 
   private unbookmarkItem() {
-    const filteredBookmarks = this.$store.state.bookmarks.filter(
-      (id: number) => {
-        return id !== this.currentBookmarkedDictionaryItem.id;
-      }
-    );
-    this.$store.commit("setBookmarks", filteredBookmarks);
-    this.store.set("bookmarks", filteredBookmarks);
+    if (this.bookmarked) {
+      const filteredBookmarks = this.$store.state.bookmarks.filter(
+        (id: number) => {
+          return id !== this.currentBookmarkedDictionaryItem.id;
+        }
+      );
+      this.$store.commit("setBookmarks", filteredBookmarks);
+      this.store.set("bookmarks", filteredBookmarks);
+      this.$store.commit(
+        "removeBookmarkedDictionaryItem",
+        this.currentBookmarkedDictionaryItem.id
+      );
+    }
   }
 }
 </script>

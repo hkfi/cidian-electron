@@ -1,6 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
 const data = require("@/assets/cc-cedict.json");
+import ElectronStore from "electron-store";
+const electronStore = new ElectronStore();
 
 import { IDictionaryItem } from "@/types";
 import { sortSearchResults } from "@/utils";
@@ -12,6 +14,7 @@ export default new Vuex.Store({
     loading: false,
     bookmarks: [] as number[],
     dictionary: [] as IDictionaryItem[],
+    bookmarkedDictionaryItems: [] as IDictionaryItem[],
     searchResults: [] as IDictionaryItem[],
     searchInput: "",
     translatorInput: "",
@@ -22,10 +25,34 @@ export default new Vuex.Store({
     currentTranslatorDictionaryItem: null as IDictionaryItem | null
   },
   mutations: {
-    // Set cc-cedict.json dictionary to dictionary in vuex
+    // Setting initial state
     // Runs once at the start of the application when App.vue is created
-    setDictionary: state => {
+    init: state => {
+      // Set cc-cedict.json dictionary to dictionary in vuex
       state.dictionary = data;
+      // Set bookmarks
+      const bookmarks: any = electronStore.get("bookmarks");
+      if (bookmarks) {
+        state.bookmarks = bookmarks;
+      } else {
+        electronStore.set("bookmarks", []);
+      }
+      // Set bookmarked dictionary items
+      state.bookmarkedDictionaryItems = state.dictionary.filter(
+        (dictionaryItem: IDictionaryItem) => {
+          return state.bookmarks.includes(dictionaryItem.id);
+        }
+      );
+    },
+    // Adding and removing dictionary items via mutations rather than getters for performance reasons
+    // Having to compute bookmarked dictionary items by filtering through the whole dictionary using a getter takes too long
+    appendBookmarkedDictionaryItem: (state, dictionaryItem) => {
+      state.bookmarkedDictionaryItems.push(dictionaryItem);
+    },
+    removeBookmarkedDictionaryItem: (state, id) => {
+      state.bookmarkedDictionaryItems = state.bookmarkedDictionaryItems.filter(
+        item => item.id !== id
+      );
     },
     setBookmarks: (state, payload) => {
       state.bookmarks = payload;
@@ -57,12 +84,5 @@ export default new Vuex.Store({
       state.loading = payload;
     }
   },
-  actions: {},
-  getters: {
-    bookmarkedDictionaryItems: state => {
-      return state.dictionary.filter((dictionaryItem: IDictionaryItem) => {
-        return state.bookmarks.includes(dictionaryItem.id);
-      });
-    }
-  }
+  actions: {}
 });
