@@ -3,13 +3,13 @@
     <!-- Left -->
     <div class="w-1/3 h-screen relative bg-gray-600 border-r border-black">
       <div class="sticky top-0 bg-gray-600 w-full p-1">
-        <input class="w-full" type="text" placeholder="Search" />
+        <input class="w-full" type="text" placeholder="Search" v-model="searchInput" />
       </div>
 
       <div>
         <div class="overflow-y-scroll max-h-90vh">
           <SearchResultCard
-            v-for="dictionaryItem in bookmarkedDictionaryItems"
+            v-for="dictionaryItem in filteredBookmarkedDictionaryItems"
             :key="dictionaryItem.id"
             :dictionaryItem="dictionaryItem"
             @selected="setCurrentBookmarkedDictionaryItem"
@@ -47,9 +47,12 @@ import Store from "electron-store";
 export default class Bookmarks extends Vue {
   @Inject() store!: Store<number[]>;
 
-  private searchInput: string = "";
-  private mounted() {
-    console.log(this.bookmarkedDictionaryItems);
+  get searchInput(): string {
+    return this.$store.state.bookmarksSearchInput;
+  }
+
+  set searchInput(input: string) {
+    this.$store.commit("setBookmarksSearchInput", input);
   }
 
   get bookmarked(): boolean {
@@ -58,8 +61,8 @@ export default class Bookmarks extends Vue {
     );
   }
 
-  get bookmarkedDictionaryItems() {
-    return this.$store.state.bookmarkedDictionaryItems;
+  get filteredBookmarkedDictionaryItems() {
+    return this.$store.getters.filteredBookmarkedDictionaryItems;
   }
 
   get currentBookmarkedDictionaryItem() {

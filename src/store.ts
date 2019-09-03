@@ -17,6 +17,7 @@ export default new Vuex.Store({
     bookmarkedDictionaryItems: [] as IDictionaryItem[],
     searchResults: [] as IDictionaryItem[],
     searchInput: "",
+    bookmarksSearchInput: "",
     translatorInput: "",
     translatorDictionaryItems: [] as IDictionaryItem[],
     translatorResults: [] as (IDictionaryItem | string)[],
@@ -68,6 +69,9 @@ export default new Vuex.Store({
     setSearchInput: (state, payload) => {
       state.searchInput = payload;
     },
+    setBookmarksSearchInput: (state, payload) => {
+      state.bookmarksSearchInput = payload;
+    },
     setTranslatorInput: (state, payload) => {
       state.translatorInput = payload;
     },
@@ -84,5 +88,18 @@ export default new Vuex.Store({
       state.loading = payload;
     }
   },
-  actions: {}
+  actions: {},
+  getters: {
+    filteredBookmarkedDictionaryItems: state => {
+      if (state.bookmarksSearchInput.length === 0) {
+        return state.bookmarkedDictionaryItems;
+      }
+      const regex = new RegExp(`^(${state.bookmarksSearchInput})`, "i");
+      return state.bookmarkedDictionaryItems.filter(item => {
+        return item.d.some(d => {
+          return d.match(regex);
+        });
+      });
+    }
+  }
 });
