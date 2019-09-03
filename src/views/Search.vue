@@ -1,8 +1,8 @@
 <template>
   <div class="flex">
     <!-- Left -->
-    <div class="w-1/3 h-screen relative bg-gray-600 border-r border-black">
-      <div class="sticky top-0 bg-gray-600 w-full p-1">
+    <div class="w-1/3 h-screen flex flex-col bg-gray-600 border-r border-black">
+      <div class="bg-gray-600 w-full p-1">
         <input
           class="w-full"
           type="text"
@@ -12,15 +12,13 @@
         />
       </div>
 
-      <div v-if="!noResults" class="bg-gray-300">
-        <div class="overflow-y-scroll max-h-90vh">
-          <SearchResultCard
-            v-for="result in results"
-            :key="result.id"
-            :dictionaryItem="result"
-            @selected="setCurrentDictionaryItem"
-          />
-        </div>
+      <div v-if="!noResults" class="flex-grow overflow-y-scroll">
+        <SearchResultCard
+          v-for="result in results"
+          :key="result.id"
+          :dictionaryItem="result"
+          @selected="setCurrentDictionaryItem"
+        />
         <button v-if="canPaginate" @click="increasePagination">See More</button>
       </div>
       <div v-else>
