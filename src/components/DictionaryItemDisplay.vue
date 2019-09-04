@@ -7,8 +7,20 @@
           <span class="block text-4xl">{{dictionaryItem.pd}}</span>
         </div>
         <div class="w-1/2">
-          <button v-if="!bookmarked" @click="bookmarkItem">Bookmark</button>
-          <button v-else @click="unbookmarkItem">Remove Bookmark</button>
+          <button
+            class="bg-transparent hover:bg-gray-500 text-white font-semibold hover:text-white py-1 px-4 border rounded focus:outline-none"
+            v-if="!bookmarked"
+            @click="bookmarkItem"
+          >
+            <i class="fas fa-plus"></i>
+          </button>
+          <button
+            class="bg-transparent hover:bg-gray-500 text-white font-semibold hover:text-white py-1 px-4 border rounded focus:outline-none"
+            v-else
+            @click="unbookmarkItem"
+          >
+            <i class="fas fa-minus"></i>
+          </button>
         </div>
       </div>
     </div>
