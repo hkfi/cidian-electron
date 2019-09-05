@@ -2,7 +2,7 @@
   <div id="app">
     <Sidebar />
     <div v-if="isLoading">...Loading...</div>
-    <div v-else class="ml-56">
+    <div v-else class="ml-48">
       <router-view />
     </div>
   </div>

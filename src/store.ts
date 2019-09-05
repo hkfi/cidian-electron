@@ -14,6 +14,7 @@ export default new Vuex.Store({
     loading: false,
     bookmarks: [] as number[],
     dictionary: [] as IDictionaryItem[],
+    singleCharacterDictionary: [] as IDictionaryItem[],
     bookmarkedDictionaryItems: [] as IDictionaryItem[],
     searchResults: [] as IDictionaryItem[],
     searchInput: "",
@@ -31,6 +32,10 @@ export default new Vuex.Store({
     init: state => {
       // Set cc-cedict.json dictionary to dictionary in vuex
       state.dictionary = data;
+      // Set single character dictionary entries for easy access
+      state.singleCharacterDictionary = state.dictionary.filter(
+        item => item.s.length === 1
+      );
       // Set bookmarks
       const bookmarks: any = electronStore.get("bookmarks");
       if (bookmarks) {
