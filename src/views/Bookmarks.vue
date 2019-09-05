@@ -46,41 +46,44 @@ export default class Bookmarks extends Vue {
   @Inject() store!: Store<number[]>;
 
   get searchInput(): string {
-    return this.$store.state.bookmarksSearchInput;
+    return this.$store.state.bookmarks.bookmarksSearchInput;
   }
 
   set searchInput(input: string) {
-    this.$store.commit("setBookmarksSearchInput", input);
+    this.$store.commit("bookmarks/setBookmarksSearchInput", input);
   }
 
   get bookmarked(): boolean {
-    return this.$store.state.bookmarks.includes(
+    return this.$store.state.bookmarks.bookmarks.includes(
       this.currentBookmarkedDictionaryItem.id
     );
   }
 
   get filteredBookmarkedDictionaryItems() {
-    return this.$store.getters.filteredBookmarkedDictionaryItems;
+    return this.$store.getters["bookmarks/filteredBookmarkedDictionaryItems"];
   }
 
   get currentBookmarkedDictionaryItem() {
-    return this.$store.state.currentBookmarkedDictionaryItem;
+    return this.$store.state.bookmarks.currentBookmarkedDictionaryItem;
   }
 
   private setCurrentBookmarkedDictionaryItem(dictionaryItem: IDictionaryItem) {
-    this.$store.commit("setCurrentBookmarkedDictionaryItem", dictionaryItem);
+    this.$store.commit(
+      "bookmarks/setCurrentBookmarkedDictionaryItem",
+      dictionaryItem
+    );
   }
 
   private bookmarkItem() {
     if (!this.bookmarked) {
       const updatedBookmarks = [
-        ...this.$store.state.bookmarks,
+        ...this.$store.state.bookmarks.bookmarks,
         this.currentBookmarkedDictionaryItem.id
       ];
-      this.$store.commit("setBookmarks", updatedBookmarks);
+      this.$store.commit("bookmarks/setBookmarks", updatedBookmarks);
       this.store.set("bookmarks", updatedBookmarks);
       this.$store.commit(
-        "appendBookmarkedDictionaryItem",
+        "bookmarks/appendBookmarkedDictionaryItem",
         this.currentBookmarkedDictionaryItem
       );
     }
@@ -88,15 +91,15 @@ export default class Bookmarks extends Vue {
 
   private unbookmarkItem() {
     if (this.bookmarked) {
-      const filteredBookmarks = this.$store.state.bookmarks.filter(
+      const filteredBookmarks = this.$store.state.bookmarks.bookmarks.filter(
         (id: number) => {
           return id !== this.currentBookmarkedDictionaryItem.id;
         }
       );
-      this.$store.commit("setBookmarks", filteredBookmarks);
+      this.$store.commit("bookmarks/setBookmarks", filteredBookmarks);
       this.store.set("bookmarks", filteredBookmarks);
       this.$store.commit(
-        "removeBookmarkedDictionaryItem",
+        "bookmarks/removeBookmarkedDictionaryItem",
         this.currentBookmarkedDictionaryItem.id
       );
     }

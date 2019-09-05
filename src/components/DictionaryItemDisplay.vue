@@ -74,7 +74,9 @@ export default class DictionaryItemDisplay extends Vue {
   }
 
   get bookmarked(): boolean {
-    return this.$store.state.bookmarks.includes(this.dictionaryItem.id);
+    return this.$store.state.bookmarks.bookmarks.includes(
+      this.dictionaryItem.id
+    );
   }
 
   @Emit()

@@ -31,7 +31,7 @@ export default class App extends Vue {
   }
 
   private created() {
-    this.$store.commit("init");
+    this.$store.dispatch("init");
   }
 
   get isLoading(): boolean {

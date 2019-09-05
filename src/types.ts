@@ -11,3 +11,10 @@ export interface ISidebarMenuItem {
   route: string; // eg. "/search"
   text: string; // eg. "Search"
 }
+
+export interface IBookmarksModuleState {
+  bookmarksSearchInput: string;
+  bookmarks: number[];
+  bookmarkedDictionaryItems: IDictionaryItem[];
+  currentBookmarkedDictionaryItem: IDictionaryItem | null;
+}

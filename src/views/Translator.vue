@@ -74,7 +74,7 @@ export default class Translator extends Vue {
   }
 
   get bookmarked(): boolean {
-    return this.$store.state.bookmarks.includes(
+    return this.$store.state.bookmarks.bookmarks.includes(
       this.currentTranslatorDictionaryItem.id
     );
   }
@@ -82,13 +82,13 @@ export default class Translator extends Vue {
   private bookmarkItem() {
     if (!this.bookmarked) {
       const updatedBookmarks = [
-        ...this.$store.state.bookmarks,
+        ...this.$store.state.bookmarks.bookmarks,
         this.currentTranslatorDictionaryItem.id
       ];
-      this.$store.commit("setBookmarks", updatedBookmarks);
+      this.$store.commit("bookmarks/setBookmarks", updatedBookmarks);
       this.store.set("bookmarks", updatedBookmarks);
       this.$store.commit(
-        "appendBookmarkedDictionaryItem",
+        "bookmarks/appendBookmarkedDictionaryItem",
         this.currentTranslatorDictionaryItem
       );
     }
@@ -96,15 +96,15 @@ export default class Translator extends Vue {
 
   private unbookmarkItem() {
     if (this.bookmarked) {
-      const filteredBookmarks = this.$store.state.bookmarks.filter(
+      const filteredBookmarks = this.$store.state.bookmarks.bookmarks.filter(
         (id: number) => {
           return id !== this.currentTranslatorDictionaryItem.id;
         }
       );
-      this.$store.commit("setBookmarks", filteredBookmarks);
+      this.$store.commit("bookmarks/setBookmarks", filteredBookmarks);
       this.store.set("bookmarks", filteredBookmarks);
       this.$store.commit(
-        "removeBookmarkedDictionaryItem",
+        "bookmarks/removeBookmarkedDictionaryItem",
         this.currentTranslatorDictionaryItem.id
       );
     }

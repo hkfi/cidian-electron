@@ -65,13 +65,13 @@ export default class Search extends Vue {
   private bookmarkItem() {
     if (!this.bookmarked) {
       const updatedBookmarks = [
-        ...this.$store.state.bookmarks,
+        ...this.$store.state.bookmarks.bookmarks,
         this.currentDictionaryItem.id
       ];
-      this.$store.commit("setBookmarks", updatedBookmarks);
+      this.$store.commit("bookmarks/setBookmarks", updatedBookmarks);
       this.store.set("bookmarks", updatedBookmarks);
       this.$store.commit(
-        "appendBookmarkedDictionaryItem",
+        "bookmarks/appendBookmarkedDictionaryItem",
         this.currentDictionaryItem
       );
     }
@@ -79,17 +79,17 @@ export default class Search extends Vue {
 
   private unbookmarkItem() {
     if (this.bookmarked) {
-      console.log(this.$store.state.bookmarks.length);
-      const filteredBookmarks = this.$store.state.bookmarks.filter(
+      console.log(this.$store.state.bookmarks.bookmarks.length);
+      const filteredBookmarks = this.$store.state.bookmarks.bookmarks.filter(
         (id: number) => {
           return id !== this.currentDictionaryItem.id;
         }
       );
       console.log("filteredbookmarks", filteredBookmarks);
-      this.$store.commit("setBookmarks", filteredBookmarks);
+      this.$store.commit("bookmarks/setBookmarks", filteredBookmarks);
       this.store.set("bookmarks", filteredBookmarks);
       this.$store.commit(
-        "removeBookmarkedDictionaryItem",
+        "bookmarks/removeBookmarkedDictionaryItem",
         this.currentDictionaryItem.id
       );
     }
@@ -100,7 +100,9 @@ export default class Search extends Vue {
   }
 
   get bookmarked(): boolean {
-    return this.$store.state.bookmarks.includes(this.currentDictionaryItem.id);
+    return this.$store.state.bookmarks.bookmarks.includes(
+      this.currentDictionaryItem.id
+    );
   }
 
   get searchInput(): string {
