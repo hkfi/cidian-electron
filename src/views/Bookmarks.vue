@@ -102,6 +102,10 @@ export default class Bookmarks extends Vue {
         "bookmarks/removeBookmarkedDictionaryItem",
         this.currentBookmarkedDictionaryItem.id
       );
+      this.$store.commit(
+        "bookmarks/removeAllDictionaryItemIdFromLists",
+        this.currentBookmarkedDictionaryItem.id
+      );
     }
   }
 }

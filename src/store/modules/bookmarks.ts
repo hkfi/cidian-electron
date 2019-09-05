@@ -68,6 +68,12 @@ export const bookmarks: Module<IBookmarksModuleState, any> = {
         list.list = list.list.filter(dicId => dicId !== id);
       }
       electronStore.set("lists", state.lists);
+    },
+    removeAllDictionaryItemIdFromLists: (state, id) => {
+      state.lists.forEach(list => {
+        list.list = list.list.filter(dicId => dicId !== id);
+      });
+      electronStore.set("lists", state.lists);
     }
   },
   actions: {},

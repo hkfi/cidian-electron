@@ -92,6 +92,10 @@ export default class Search extends Vue {
         "bookmarks/removeBookmarkedDictionaryItem",
         this.currentDictionaryItem.id
       );
+      this.$store.commit(
+        "bookmarks/removeAllDictionaryItemIdFromLists",
+        this.currentDictionaryItem.id
+      );
     }
   }
 

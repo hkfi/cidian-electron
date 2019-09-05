@@ -107,6 +107,10 @@ export default class Translator extends Vue {
         "bookmarks/removeBookmarkedDictionaryItem",
         this.currentTranslatorDictionaryItem.id
       );
+      this.$store.commit(
+        "bookmarks/removeAllDictionaryItemIdFromLists",
+        this.currentTranslatorDictionaryItem.id
+      );
     }
   }
 

@@ -34,6 +34,7 @@
                   :key="i"
                   :list="list"
                   :dictionaryItem="dictionaryItem"
+                  @bookmark-item="bookmarkItem"
                 />
                 <input class="text-black" type="text" placeholder="List name" v-model="newListName" />
                 <button @click="createList">Create a list</button>
