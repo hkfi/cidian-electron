@@ -8,6 +8,7 @@ export const bookmarks: Module<IBookmarksModuleState, any> = {
   state: {
     bookmarksSearchInput: "",
     bookmarks: [],
+    lists: [],
     bookmarkedDictionaryItems: [],
     currentBookmarkedDictionaryItem: null
   },
@@ -23,6 +24,14 @@ export const bookmarks: Module<IBookmarksModuleState, any> = {
     },
     initBookmarkedDictionaryItems: (state, payload) => {
       state.bookmarkedDictionaryItems = payload;
+    },
+    initLists: state => {
+      const lists: any = electronStore.get("lists");
+      if (lists) {
+        state.lists = lists;
+      } else {
+        electronStore.set("lists", []);
+      }
     },
     // Adding and removing dictionary items via mutations rather than getters for performance reasons
     // Having to compute bookmarked dictionary items by filtering through the whole dictionary using a getter takes too long
@@ -42,6 +51,23 @@ export const bookmarks: Module<IBookmarksModuleState, any> = {
     },
     setCurrentBookmarkedDictionaryItem: (state, payload: IDictionaryItem) => {
       state.currentBookmarkedDictionaryItem = payload;
+    },
+    setLists: (state, payload) => {
+      state.lists = payload;
+    },
+    addDictionaryItemIdToList: (state, { name, id }) => {
+      const list = state.lists.find(list => list.name === name);
+      if (list) {
+        list.list.push(id);
+      }
+      electronStore.set("lists", state.lists);
+    },
+    removeDictionaryItemIdFromList: (state, { name, id }) => {
+      const list = state.lists.find(list => list.name === name);
+      if (list) {
+        list.list = list.list.filter(dicId => dicId !== id);
+      }
+      electronStore.set("lists", state.lists);
     }
   },
   actions: {},

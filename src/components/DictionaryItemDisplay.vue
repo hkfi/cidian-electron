@@ -9,19 +9,36 @@
         <div class="w-1/2">
           <div class="block">
             <button
-              class="bg-transparent hover:bg-gray-500 font-semibold text-blue-500 py-1 px-4 border rounded focus:outline-none"
+              class="bg-transparent hover:bg-gray-500 font-semibold text-blue-500 py-1 px-4 border rounded focus:outline-none mr-1"
               v-if="!bookmarked"
               @click="bookmarkItem"
             >
               <i class="fas fa-plus"></i>
             </button>
             <button
-              class="bg-transparent hover:bg-gray-500 font-semibold text-blue-500 py-1 px-4 border rounded focus:outline-none"
+              class="bg-transparent hover:bg-gray-500 font-semibold text-blue-500 py-1 px-4 border rounded focus:outline-none mr-1"
               v-else
               @click="unbookmarkItem"
             >
               <i class="fas fa-minus"></i>
             </button>
+            <div class="relative inline-block dropdown">
+              <div
+                class="bg-transparent hover:bg-gray-500 font-semibold text-blue-500 py-1 px-4 border rounded focus:outline-none"
+              >
+                <i class="fas fa-angle-double-down"></i> Add to list
+              </div>
+              <div class="hidden absolute min-w-full dropdown-content bg-gray-900">
+                <DropdownContent
+                  v-for="(list,i) in lists"
+                  :key="i"
+                  :list="list"
+                  :dictionaryItem="dictionaryItem"
+                />
+                <input class="text-black" type="text" placeholder="List name" v-model="newListName" />
+                <button @click="createList">Create a list</button>
+              </div>
+            </div>
           </div>
           <div class="block">
             <span class="text-2xl">Definitions:</span>
@@ -46,15 +63,49 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Emit } from "vue-property-decorator";
-import { IDictionaryItem } from "../types";
+import { Component, Vue, Prop, Emit, Inject } from "vue-property-decorator";
+import { IDictionaryItem, IList } from "../types";
+import Store from "electron-store";
+import DropdownContent from "@/components/DropdownContent.vue";
 
-@Component
+@Component({
+  components: {
+    DropdownContent
+  }
+})
 export default class DictionaryItemDisplay extends Vue {
+  @Inject() store!: Store<number[]>;
   @Prop() dictionaryItem!: IDictionaryItem;
+
+  private newListName: string = "";
 
   private setRelevantCharacter() {
     console.log("clicked");
+  }
+
+  private createList() {
+    if (this.newListName.length > 0) {
+      console.log(this.$store.state.bookmarks.lists);
+      const listExists = this.$store.state.bookmarks.lists.some(
+        (item: IList) => item.name === this.newListName
+      );
+      if (!listExists) {
+        const newList = {
+          name: this.newListName,
+          list: []
+        };
+        const updatedLists = [...this.$store.state.bookmarks.lists, newList];
+        this.$store.commit("bookmarks/setLists", updatedLists);
+        this.store.set("lists", updatedLists);
+        this.newListName = "";
+      } else {
+        console.log("list already exists");
+      }
+    }
+  }
+
+  get lists() {
+    return this.$store.state.bookmarks.lists;
   }
 
   get definitionAsArray(): string[] {

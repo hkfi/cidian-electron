@@ -66,6 +66,7 @@ export default new Vuex.Store({
         "bookmarks/initBookmarkedDictionaryItems",
         bookmarkedDictionaryItems
       );
+      commit("bookmarks/initLists");
     }
   },
   getters: {}

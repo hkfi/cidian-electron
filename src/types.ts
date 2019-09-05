@@ -7,6 +7,11 @@ export interface IDictionaryItem {
   d: string[]; // definition(s)
 }
 
+export interface IList {
+  name: string;
+  list: number[];
+}
+
 export interface ISidebarMenuItem {
   route: string; // eg. "/search"
   text: string; // eg. "Search"
@@ -15,6 +20,7 @@ export interface ISidebarMenuItem {
 export interface IBookmarksModuleState {
   bookmarksSearchInput: string;
   bookmarks: number[];
+  lists: IList[];
   bookmarkedDictionaryItems: IDictionaryItem[];
   currentBookmarkedDictionaryItem: IDictionaryItem | null;
 }
