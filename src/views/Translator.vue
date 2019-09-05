@@ -58,19 +58,19 @@ export default class Translator extends Vue {
   @Inject() store!: Store<number[]>;
 
   get translatorResults(): (IDictionaryItem | string)[] {
-    return this.$store.state.translatorResults;
+    return this.$store.state.translator.translatorResults;
   }
 
   get translatorInput(): string {
-    return this.$store.state.translatorInput;
+    return this.$store.state.translator.translatorInput;
   }
 
   set translatorInput(input: string) {
-    this.$store.commit("setTranslatorInput", input);
+    this.$store.commit("translator/setTranslatorInput", input);
   }
 
   get currentTranslatorDictionaryItem() {
-    return this.$store.state.currentTranslatorDictionaryItem;
+    return this.$store.state.translator.currentTranslatorDictionaryItem;
   }
 
   get bookmarked(): boolean {
@@ -165,7 +165,7 @@ export default class Translator extends Vue {
     }
 
     console.log("dicItemArray", dicItemArray);
-    this.$store.commit("setTranslatorResults", dicItemArray);
+    this.$store.commit("translator/setTranslatorResults", dicItemArray);
     let endTime = Date.now();
     console.log(endTime - startTime);
   }
@@ -173,7 +173,7 @@ export default class Translator extends Vue {
   private setCurrentTranslatorDictionaryItem(item: IDictionaryItem | string) {
     console.log("typeof", typeof item);
     if (typeof item === "object") {
-      this.$store.commit("setCurrentTranslatorDictionaryItem", item);
+      this.$store.commit("translator/setCurrentTranslatorDictionaryItem", item);
     }
   }
 }

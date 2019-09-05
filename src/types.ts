@@ -18,3 +18,10 @@ export interface IBookmarksModuleState {
   bookmarkedDictionaryItems: IDictionaryItem[];
   currentBookmarkedDictionaryItem: IDictionaryItem | null;
 }
+
+export interface ITranslatorModuleState {
+  translatorInput: string;
+  translatorDictionaryItems: IDictionaryItem[];
+  translatorResults: (IDictionaryItem | string)[];
+  currentTranslatorDictionaryItem: IDictionaryItem | null;
+}

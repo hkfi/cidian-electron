@@ -7,12 +7,14 @@ import { sortSearchResults } from "@/utils";
 
 // Modules
 import { bookmarks } from "@/store/modules/bookmarks";
+import { translator } from "@/store/modules/translator";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    bookmarks
+    bookmarks,
+    translator
   },
   state: {
     loading: false,
@@ -20,11 +22,7 @@ export default new Vuex.Store({
     singleCharacterDictionary: [] as IDictionaryItem[],
     searchResults: [] as IDictionaryItem[],
     searchInput: "",
-    translatorInput: "",
-    translatorDictionaryItems: [] as IDictionaryItem[],
-    translatorResults: [] as (IDictionaryItem | string)[],
-    currentDictionaryItem: null as IDictionaryItem | null,
-    currentTranslatorDictionaryItem: null as IDictionaryItem | null
+    currentDictionaryItem: null as IDictionaryItem | null
   },
   mutations: {
     initDictionary: state => {
@@ -40,20 +38,11 @@ export default new Vuex.Store({
       const sortedResults = sortSearchResults(payload, state.searchInput);
       state.searchResults = sortedResults;
     },
-    setTranslatorResults: (state, payload) => {
-      state.translatorResults = payload;
-    },
     setSearchInput: (state, payload) => {
       state.searchInput = payload;
     },
-    setTranslatorInput: (state, payload) => {
-      state.translatorInput = payload;
-    },
     setCurrentDictionaryItem: (state, payload: IDictionaryItem) => {
       state.currentDictionaryItem = payload;
-    },
-    setCurrentTranslatorDictionaryItem: (state, payload: IDictionaryItem) => {
-      state.currentTranslatorDictionaryItem = payload;
     },
     setLoading: (state, payload: boolean) => {
       state.loading = payload;
