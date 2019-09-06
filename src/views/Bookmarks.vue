@@ -2,13 +2,29 @@
   <div class="flex">
     <!-- Left -->
     <div class="w-1/3 h-screen flex flex-col bg-gray-600 border-r border-black">
-      <div class="bg-gray-600 w-full p-1">
+      <div class="bg-gray-600 w-full p-1 flex flex-inline">
+        <div class="relative inline-block dropdown">
+          <div
+            class="bg-transparent hover:bg-gray-500 font-semibold text-blue-500 py-1 px-3 mr-1 border rounded focus:outline-none"
+          >
+            <i class="fas fa-angle-double-down"></i>
+          </div>
+          <div class="hidden absolute w-32 min-w-full dropdown-content bg-gray-900 text-white">
+            <div @click="setList(null)" class="cursor-pointer">Bookmarks</div>
+            <div
+              v-for="list in lists"
+              :key="list.name"
+              class="cursor-pointer"
+              @click="setList(list.name)"
+            >{{list.name}}</div>
+          </div>
+        </div>
         <input class="w-full" type="text" placeholder="Search" v-model="searchInput" />
       </div>
 
       <div class="flex-grow overflow-y-scroll">
         <SearchResultCard
-          v-for="dictionaryItem in filteredBookmarkedDictionaryItems"
+          v-for="dictionaryItem in dictionaryItemsToShow"
           :key="dictionaryItem.id"
           :dictionaryItem="dictionaryItem"
           @selected="setCurrentBookmarkedDictionaryItem"
@@ -31,7 +47,7 @@
 
 <script lang="ts">
 import { Component, Vue, Inject } from "vue-property-decorator";
-import { IDictionaryItem } from "../types";
+import { IDictionaryItem, IList } from "../types";
 import SearchResultCard from "@/components/SearchResultCard.vue";
 import DictionaryItemDisplay from "@/components/DictionaryItemDisplay.vue";
 import Store from "electron-store";
@@ -45,12 +61,37 @@ import Store from "electron-store";
 export default class Bookmarks extends Vue {
   @Inject() store!: Store<number[]>;
 
+  private listName: null | string = null;
+
+  private setList(listName: null | string) {
+    this.listName = listName;
+  }
+
   get searchInput(): string {
     return this.$store.state.bookmarks.bookmarksSearchInput;
   }
 
   set searchInput(input: string) {
     this.$store.commit("bookmarks/setBookmarksSearchInput", input);
+  }
+
+  get lists() {
+    return this.$store.state.bookmarks.lists;
+  }
+
+  get currentList(): IList {
+    return this.$store.state.bookmarks.lists.find(
+      (list: any) => list.name === this.listName
+    );
+  }
+
+  get dictionaryItemsToShow() {
+    if (this.listName) {
+      return this.filteredBookmarkedDictionaryItems.filter((item: any) => {
+        return this.currentList.list.includes(item.id);
+      });
+    }
+    return this.filteredBookmarkedDictionaryItems;
   }
 
   get bookmarked(): boolean {
