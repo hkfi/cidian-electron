@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-700 text-white border-r border-black min-h-screen pt-8 w-16 fixed">
+  <div class="bg-gray-700 text-white border-r border-black min-h-screen pt-8 w-16 fixed z-10">
     <router-link
       v-for="sidebarMenuItem in sidebarMenuItems"
       :key="sidebarMenuItem.route"

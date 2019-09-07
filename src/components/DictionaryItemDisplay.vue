@@ -8,20 +8,11 @@
         </div>
         <div class="w-1/2">
           <div class="block">
-            <button
-              class="bg-transparent hover:bg-gray-500 font-semibold text-blue-500 py-1 px-4 border rounded focus:outline-none mr-1"
-              v-if="!bookmarked"
-              @click="bookmarkItem"
-            >
-              <font-awesome-icon icon="plus"></font-awesome-icon>
-            </button>
-            <button
-              class="bg-transparent hover:bg-gray-500 font-semibold text-blue-500 py-1 px-4 border rounded focus:outline-none mr-1"
-              v-else
-              @click="unbookmarkItem"
-            >
-              <font-awesome-icon icon="minus"></font-awesome-icon>
-            </button>
+            <AddRemoveButton
+              :trueCondition="bookmarked"
+              @add="bookmarkItem"
+              @remove="unbookmarkItem"
+            />
             <div class="relative inline-block dropdown">
               <div
                 class="bg-transparent hover:bg-gray-500 font-semibold text-blue-500 py-1 px-4 border rounded focus:outline-none"
@@ -74,10 +65,12 @@ import { Component, Vue, Prop, Emit, Inject } from "vue-property-decorator";
 import { IDictionaryItem, IList } from "../types";
 import Store from "electron-store";
 import DropdownContent from "@/components/DropdownContent.vue";
+import AddRemoveButton from "@/components/AddRemoveButton.vue";
 
 @Component({
   components: {
-    DropdownContent
+    DropdownContent,
+    AddRemoveButton
   }
 })
 export default class DictionaryItemDisplay extends Vue {

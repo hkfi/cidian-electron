@@ -9,12 +9,14 @@
           >
             <font-awesome-icon icon="angle-double-down"></font-awesome-icon>
           </div>
-          <div class="hidden absolute w-32 min-w-full dropdown-content bg-gray-900 text-white">
-            <div @click="setList(null)" class="cursor-pointer">Bookmarks</div>
+          <div
+            class="hidden absolute w-32 min-w-full dropdown-content bg-gray-700 rounded border text-white"
+          >
+            <div @click="setList(null)" class="cursor-pointer p-1 hover:bg-gray-800">Bookmarks</div>
             <div
               v-for="list in lists"
               :key="list.name"
-              class="cursor-pointer"
+              class="cursor-pointer p-1 hover:bg-gray-800"
               @click="setList(list.name)"
             >{{list.name}}</div>
           </div>
