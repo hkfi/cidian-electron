@@ -40,8 +40,8 @@
           </div>
           <div class="block">
             <span class="text-2xl">Definitions:</span>
-            <ul class="text-xl">
-              <li v-for="def in dictionaryItem.d" :key="def">- {{def}}</li>
+            <ul class="text-xl flex flex-wrap">
+              <li v-for="def in dictionaryItem.d" :key="def" class="whitespace-normal">- {{def}}</li>
             </ul>
           </div>
         </div>

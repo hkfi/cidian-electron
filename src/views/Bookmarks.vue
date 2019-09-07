@@ -41,7 +41,9 @@
     </div>
 
     <!-- Right -->
-    <div class="w-2/3 min-h-screen max-h-screen bg-gray-800 text-white border-r border-black">
+    <div
+      class="w-2/3 min-h-screen max-h-screen bg-gray-800 text-white border-r border-black overflow-y-auto"
+    >
       <DictionaryItemDisplay
         v-if="currentBookmarkedDictionaryItem"
         :dictionaryItem="currentBookmarkedDictionaryItem"

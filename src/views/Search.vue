@@ -4,7 +4,7 @@
     <div class="w-1/3 h-screen flex flex-col bg-gray-600 border-r border-black">
       <div class="bg-gray-600 w-full p-1">
         <input
-          class="w-full"
+          class="w-full placeholder-gray-600"
           type="text"
           placeholder="Search"
           v-model="searchInput"
@@ -12,7 +12,7 @@
         />
       </div>
 
-      <div v-if="!noResults" class="flex-grow overflow-y-scroll">
+      <div class="flex-grow overflow-y-scroll">
         <SearchResultCard
           v-for="result in results"
           :key="result.id"
@@ -21,13 +21,15 @@
         />
         <button v-if="canPaginate" @click="increasePagination">See More</button>
       </div>
-      <div v-else>
+      <div v-if="noResults">
         <p>No results</p>
       </div>
     </div>
 
     <!-- Right -->
-    <div class="w-2/3 min-h-screen max-h-screen bg-gray-800 text-white border-r border-black">
+    <div
+      class="w-2/3 min-h-screen max-h-screen bg-gray-800 text-white border-r border-black overflow-y-auto"
+    >
       <DictionaryItemDisplay
         v-if="currentDictionaryItem"
         :dictionaryItem="currentDictionaryItem"

@@ -1,8 +1,8 @@
 <template>
-  <div id="app">
+  <div id="app" class="flex">
     <Sidebar />
     <div v-if="isLoading">...Loading...</div>
-    <div v-else class="ml-16">
+    <div v-else class="w-full">
       <router-view />
     </div>
   </div>
