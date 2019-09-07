@@ -1,21 +1,21 @@
 <template>
-  <div class="flex flex-inline">
+  <div class="flex flex-inline my-1">
     <button
       v-if="!dictionaryItemInList"
       class="bg-transparent hover:bg-gray-500 font-semibold text-blue-500 py-1 px-4 border rounded focus:outline-none mr-1"
       @click="addToList"
     >
-      <i class="fas fa-plus"></i>
+      <font-awesome-icon icon="plus"></font-awesome-icon>
     </button>
     <button
       v-else
       class="bg-transparent hover:bg-gray-500 font-semibold text-blue-500 py-1 px-4 border rounded focus:outline-none mr-1"
       @click="removeFromList"
     >
-      <i class="fas fa-minus"></i>
+      <font-awesome-icon icon="minus"></font-awesome-icon>
     </button>
 
-    <div>{{list.name}}</div>
+    <div class="text-xl">{{list.name}}</div>
   </div>
 </template>
 

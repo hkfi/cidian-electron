@@ -13,20 +13,21 @@
               v-if="!bookmarked"
               @click="bookmarkItem"
             >
-              <i class="fas fa-plus"></i>
+              <font-awesome-icon icon="plus"></font-awesome-icon>
             </button>
             <button
               class="bg-transparent hover:bg-gray-500 font-semibold text-blue-500 py-1 px-4 border rounded focus:outline-none mr-1"
               v-else
               @click="unbookmarkItem"
             >
-              <i class="fas fa-minus"></i>
+              <font-awesome-icon icon="minus"></font-awesome-icon>
             </button>
             <div class="relative inline-block dropdown">
               <div
                 class="bg-transparent hover:bg-gray-500 font-semibold text-blue-500 py-1 px-4 border rounded focus:outline-none"
               >
-                <i class="fas fa-angle-double-down"></i> Add to list
+                <font-awesome-icon icon="angle-double-down" class="mr-2"></font-awesome-icon>
+                <span>Add to list</span>
               </div>
               <div class="hidden absolute min-w-full dropdown-content bg-gray-900">
                 <DropdownContent
@@ -36,7 +37,12 @@
                   :dictionaryItem="dictionaryItem"
                   @bookmark-item="bookmarkItem"
                 />
-                <input class="text-black" type="text" placeholder="List name" v-model="newListName" />
+                <input
+                  class="text-black placeholder-gray-600"
+                  type="text"
+                  placeholder="List name"
+                  v-model="newListName"
+                />
                 <button @click="createList">Create a list</button>
               </div>
             </div>
@@ -52,11 +58,11 @@
     </div>
     <div class="block text-2xl">
       Characters:
-      <ul class="flex flex-row">
+      <ul class="flex flex-wrap">
         <li v-for="item in relevantDictionaryItems" :key="item.id" class="mr-1">
-          <span
+          <div
             class="border border-white rounded hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-1 px-3 cursor-pointer"
-          >{{item.s}}</span>
+          >{{item.s}}</div>
         </li>
       </ul>
     </div>

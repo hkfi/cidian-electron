@@ -15,6 +15,7 @@ export interface IList {
 export interface ISidebarMenuItem {
   route: string; // eg. "/search"
   text: string; // eg. "Search"
+  icon: string; // eg. "search"
 }
 
 export interface IBookmarksModuleState {

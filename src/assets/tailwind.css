@@ -5,3 +5,10 @@
 .dropdown:hover .dropdown-content {
   @apply block;
 }
+
+input {
+  @apply rounded;
+  @apply bg-gray-200;
+  /* @apply placeholder-gray-600; */
+  @apply pl-1;
+}

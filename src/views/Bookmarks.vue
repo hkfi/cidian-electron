@@ -7,7 +7,7 @@
           <div
             class="bg-transparent hover:bg-gray-500 font-semibold text-blue-500 py-1 px-3 mr-1 border rounded focus:outline-none"
           >
-            <i class="fas fa-angle-double-down"></i>
+            <font-awesome-icon icon="angle-double-down"></font-awesome-icon>
           </div>
           <div class="hidden absolute w-32 min-w-full dropdown-content bg-gray-900 text-white">
             <div @click="setList(null)" class="cursor-pointer">Bookmarks</div>
@@ -19,7 +19,12 @@
             >{{list.name}}</div>
           </div>
         </div>
-        <input class="w-full" type="text" placeholder="Search" v-model="searchInput" />
+        <input
+          class="w-full placeholder-gray-600"
+          type="text"
+          placeholder="Search"
+          v-model="searchInput"
+        />
       </div>
 
       <div class="flex-grow overflow-y-scroll">
