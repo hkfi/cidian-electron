@@ -34,6 +34,11 @@ export default new Router({
       path: "/translator",
       name: "translator",
       component: () => import("./views/Translator.vue")
+    },
+    {
+      path: "/study",
+      name: "study",
+      component: () => import("./views/Study.vue")
     }
   ]
 });

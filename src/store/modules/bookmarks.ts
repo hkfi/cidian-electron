@@ -88,6 +88,9 @@ export const bookmarks: Module<IBookmarksModuleState, any> = {
           return d.match(regex);
         });
       });
+    },
+    getListByName: state => (name: string) => {
+      return state.lists.find(list => list.name === name);
     }
   }
 };

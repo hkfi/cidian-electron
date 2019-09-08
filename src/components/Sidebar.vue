@@ -35,14 +35,19 @@ export default class Sidebar extends Vue {
       icon: "search"
     },
     {
+      route: "/translator",
+      text: "Translator",
+      icon: "language"
+    },
+    {
       route: "/bookmarks",
       text: "Bookmarks",
       icon: "bookmark"
     },
     {
-      route: "/translator",
-      text: "Translator",
-      icon: "language"
+      route: "/study",
+      text: "Study",
+      icon: "book-open"
     }
   ];
 

@@ -8,11 +8,14 @@ import {
   faSearch,
   faHome,
   faBookmark,
+  faBookOpen,
   faLanguage,
   faPlus,
   faMinus,
   faCheck,
-  faAngleDoubleDown
+  faAngleDoubleDown,
+  faChevronLeft,
+  faChevronRight
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
@@ -21,11 +24,14 @@ library.add(
   faSearch,
   faHome,
   faBookmark,
+  faBookOpen,
   faLanguage,
   faPlus,
   faMinus,
   faCheck,
-  faAngleDoubleDown
+  faAngleDoubleDown,
+  faChevronLeft,
+  faChevronRight
 );
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
