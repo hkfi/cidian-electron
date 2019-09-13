@@ -152,9 +152,11 @@ export default class Search extends Vue {
 
   private searchWithInput() {
     if (this.searchInput.length > 0) {
-      let tempResult = this.$store.state.dictionary.filter((word: any) => {
-        return this.arrayIncludesWord(word.d);
-      });
+      let tempResult = this.$store.state.dictionary.filter(
+        (dicItem: IDictionaryItem) => {
+          return this.searchCondition(dicItem);
+        }
+      );
       this.noResults = tempResult.length === 0 ? true : false;
       this.$store.commit("setSearchResults", tempResult.slice(0, 1000));
     }
@@ -169,11 +171,27 @@ export default class Search extends Vue {
     }, 500);
   }
 
-  private arrayIncludesWord(array: any) {
-    let temp = array.filter((word: string) => {
-      return word.includes(this.searchInput);
+  // Return dictionary items where any of the following is fulfilled
+  // 1. simplified string includes input
+  // 2. traditional string includes input
+  // 3. pinyin numeric string includes input
+  // 4. pinyin diacritic string includes input
+  // 5. pinyin without markings string includes input
+  // 6. any of the definitions string includes input
+  private searchCondition(dicItem: IDictionaryItem) {
+    // Need to create temp because d (definitions) property is an array of strings
+    const temp = dicItem.d.filter((word: string) => {
+      return word.toLowerCase().includes(this.searchInput.toLowerCase());
     });
-    return temp.length > 0 ? true : false;
+    const marklessPinyin = dicItem.pn.toLowerCase().replace(/[0-9]/g, "");
+    const trueCondition =
+      temp.length > 0 ||
+      dicItem.s.includes(this.searchInput) ||
+      dicItem.t.includes(this.searchInput) ||
+      dicItem.pn.includes(this.searchInput) ||
+      dicItem.pd.includes(this.searchInput) ||
+      marklessPinyin.includes(this.searchInput.toLowerCase());
+    return trueCondition;
   }
 }
 </script>
