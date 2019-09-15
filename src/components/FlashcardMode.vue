@@ -1,9 +1,12 @@
 <template>
   <div class="flex flex-col h-full">
-    <div class="block h-16 p-2 flex-none flex">
-      <div class="flex-none w-10 text-xl cursor-pointer" @click="stopFlashcardMode">Exit</div>
+    <div class="m-1 p-2 block h-16 flex-none flex">
+      <button
+        class="flex-none text-xl font-semibold text-red-500 hover:bg-gray-500 px-4 border rounded focus:outline-none"
+        @click="stopFlashcardMode"
+      >Exit</button>
       <div class="flex-grow text-center text-2xl">{{list.name}}</div>
-      <div class="flex-none w-10 text-xl">{{`${currentCardNumber}/${listLength}`}}</div>
+      <div class="flex-none text-xl">{{`${currentCardNumber}/${listLength}`}}</div>
     </div>
     <div class="block flex h-full">
       <div class="flex-none w-16">

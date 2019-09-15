@@ -47,7 +47,10 @@
             </div>
             <div class="w-1/2">
               <div class="block">
-                <button @click="startFlashcardMode">Flashcards</button>
+                <button
+                  @click="startFlashcardMode"
+                  class="bg-transparent hover:bg-gray-500 font-semibold py-1 px-4 border rounded focus:outline-none mr-1 text-blue-500"
+                >Study</button>
               </div>
             </div>
           </div>
