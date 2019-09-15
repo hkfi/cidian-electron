@@ -35,8 +35,6 @@
       <DictionaryItemDisplay
         v-if="currentTranslatorDictionaryItem"
         :dictionaryItem="currentTranslatorDictionaryItem"
-        @bookmark-item="bookmarkItem"
-        @unbookmark-item="unbookmarkItem"
       />
     </div>
   </div>
@@ -71,47 +69,6 @@ export default class Translator extends Vue {
 
   get currentTranslatorDictionaryItem() {
     return this.$store.state.translator.currentTranslatorDictionaryItem;
-  }
-
-  get bookmarked(): boolean {
-    return this.$store.state.bookmarks.bookmarks.includes(
-      this.currentTranslatorDictionaryItem.id
-    );
-  }
-
-  private bookmarkItem() {
-    if (!this.bookmarked) {
-      const updatedBookmarks = [
-        ...this.$store.state.bookmarks.bookmarks,
-        this.currentTranslatorDictionaryItem.id
-      ];
-      this.$store.commit("bookmarks/setBookmarks", updatedBookmarks);
-      this.store.set("bookmarks", updatedBookmarks);
-      this.$store.commit(
-        "bookmarks/appendBookmarkedDictionaryItem",
-        this.currentTranslatorDictionaryItem
-      );
-    }
-  }
-
-  private unbookmarkItem() {
-    if (this.bookmarked) {
-      const filteredBookmarks = this.$store.state.bookmarks.bookmarks.filter(
-        (id: number) => {
-          return id !== this.currentTranslatorDictionaryItem.id;
-        }
-      );
-      this.$store.commit("bookmarks/setBookmarks", filteredBookmarks);
-      this.store.set("bookmarks", filteredBookmarks);
-      this.$store.commit(
-        "bookmarks/removeBookmarkedDictionaryItem",
-        this.currentTranslatorDictionaryItem.id
-      );
-      this.$store.commit(
-        "bookmarks/removeAllDictionaryItemIdFromLists",
-        this.currentTranslatorDictionaryItem.id
-      );
-    }
   }
 
   private translate() {
@@ -175,7 +132,6 @@ export default class Translator extends Vue {
   }
 
   private setCurrentTranslatorDictionaryItem(item: IDictionaryItem | string) {
-    console.log("typeof", typeof item);
     if (typeof item === "object") {
       this.$store.commit("translator/setCurrentTranslatorDictionaryItem", item);
     }

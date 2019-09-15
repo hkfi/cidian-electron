@@ -47,8 +47,6 @@
       <DictionaryItemDisplay
         v-if="currentBookmarkedDictionaryItem"
         :dictionaryItem="currentBookmarkedDictionaryItem"
-        @bookmark-item="bookmarkItem"
-        @unbookmark-item="unbookmarkItem"
       />
     </div>
   </div>
@@ -103,12 +101,6 @@ export default class Bookmarks extends Vue {
     return this.filteredBookmarkedDictionaryItems;
   }
 
-  get bookmarked(): boolean {
-    return this.$store.state.bookmarks.bookmarks.includes(
-      this.currentBookmarkedDictionaryItem.id
-    );
-  }
-
   get filteredBookmarkedDictionaryItems() {
     return this.$store.getters["bookmarks/filteredBookmarkedDictionaryItems"];
   }
@@ -122,41 +114,6 @@ export default class Bookmarks extends Vue {
       "bookmarks/setCurrentBookmarkedDictionaryItem",
       dictionaryItem
     );
-  }
-
-  private bookmarkItem() {
-    if (!this.bookmarked) {
-      const updatedBookmarks = [
-        ...this.$store.state.bookmarks.bookmarks,
-        this.currentBookmarkedDictionaryItem.id
-      ];
-      this.$store.commit("bookmarks/setBookmarks", updatedBookmarks);
-      this.store.set("bookmarks", updatedBookmarks);
-      this.$store.commit(
-        "bookmarks/appendBookmarkedDictionaryItem",
-        this.currentBookmarkedDictionaryItem
-      );
-    }
-  }
-
-  private unbookmarkItem() {
-    if (this.bookmarked) {
-      const filteredBookmarks = this.$store.state.bookmarks.bookmarks.filter(
-        (id: number) => {
-          return id !== this.currentBookmarkedDictionaryItem.id;
-        }
-      );
-      this.$store.commit("bookmarks/setBookmarks", filteredBookmarks);
-      this.store.set("bookmarks", filteredBookmarks);
-      this.$store.commit(
-        "bookmarks/removeBookmarkedDictionaryItem",
-        this.currentBookmarkedDictionaryItem.id
-      );
-      this.$store.commit(
-        "bookmarks/removeAllDictionaryItemIdFromLists",
-        this.currentBookmarkedDictionaryItem.id
-      );
-    }
   }
 }
 </script>

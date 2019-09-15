@@ -30,12 +30,7 @@
     <div
       class="w-2/3 min-h-screen max-h-screen bg-gray-800 text-white border-r border-black overflow-y-auto"
     >
-      <DictionaryItemDisplay
-        v-if="currentDictionaryItem"
-        :dictionaryItem="currentDictionaryItem"
-        @bookmark-item="bookmarkItem"
-        @unbookmark-item="unbookmarkItem"
-      />
+      <DictionaryItemDisplay v-if="currentDictionaryItem" :dictionaryItem="currentDictionaryItem" />
     </div>
   </div>
 </template>
@@ -45,7 +40,6 @@ import { Component, Vue, Watch, Inject } from "vue-property-decorator";
 import { IDictionaryItem } from "@/types";
 import SearchResultCard from "@/components/SearchResultCard.vue";
 import DictionaryItemDisplay from "@/components/DictionaryItemDisplay.vue";
-import { remote } from "electron";
 import Store from "electron-store";
 
 @Component({
@@ -64,51 +58,8 @@ export default class Search extends Vue {
 
   private pagination: number = 1;
 
-  private bookmarkItem() {
-    if (!this.bookmarked) {
-      const updatedBookmarks = [
-        ...this.$store.state.bookmarks.bookmarks,
-        this.currentDictionaryItem.id
-      ];
-      this.$store.commit("bookmarks/setBookmarks", updatedBookmarks);
-      this.store.set("bookmarks", updatedBookmarks);
-      this.$store.commit(
-        "bookmarks/appendBookmarkedDictionaryItem",
-        this.currentDictionaryItem
-      );
-    }
-  }
-
-  private unbookmarkItem() {
-    if (this.bookmarked) {
-      console.log(this.$store.state.bookmarks.bookmarks.length);
-      const filteredBookmarks = this.$store.state.bookmarks.bookmarks.filter(
-        (id: number) => {
-          return id !== this.currentDictionaryItem.id;
-        }
-      );
-      console.log("filteredbookmarks", filteredBookmarks);
-      this.$store.commit("bookmarks/setBookmarks", filteredBookmarks);
-      this.store.set("bookmarks", filteredBookmarks);
-      this.$store.commit(
-        "bookmarks/removeBookmarkedDictionaryItem",
-        this.currentDictionaryItem.id
-      );
-      this.$store.commit(
-        "bookmarks/removeAllDictionaryItemIdFromLists",
-        this.currentDictionaryItem.id
-      );
-    }
-  }
-
   private setCurrentDictionaryItem(dictionaryItem: IDictionaryItem) {
     this.$store.commit("setCurrentDictionaryItem", dictionaryItem);
-  }
-
-  get bookmarked(): boolean {
-    return this.$store.state.bookmarks.bookmarks.includes(
-      this.currentDictionaryItem.id
-    );
   }
 
   get searchInput(): string {
